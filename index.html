@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Legacy Manager</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<!-- =========================================================
+     SVG ICON SPRITE
+     ========================================================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.6-3 8.4-7 9-4-.6-7-4.4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.2"/></symbol>
+<symbol id="i-box" viewBox="0 0 24 24"><path d="M3.5 7.5L12 3l8.5 4.5V16.5L12 21l-8.5-4.5V7.5z"/><path d="M3.8 7.3L12 12l8.2-4.7"/><path d="M12 12v9"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M2.8 20c.6-3.4 3.2-5.5 6.2-5.5s5.6 2.1 6.2 5.5"/><circle cx="17" cy="8.6" r="2.4"/><path d="M15.5 14.7c2.3.3 4.2 2.1 4.7 4.8"/></symbol>
+<symbol id="i-scroll" viewBox="0 0 24 24"><path d="M6 3.5h11a2 2 0 012 2V17a2.5 2.5 0 01-2.5 2.5H7"/><path d="M6 3.5A2 2 0 004 5.5v13A2 2 0 006 20.5"/><path d="M8.5 8h7M8.5 11.5h7M8.5 15h4"/></symbol>
+<symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l2.5-7 4.5 14 2.5-7H21"/></symbol>
+<symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2.4M12 18.6V21M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M3 12h2.4M18.6 12H21M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.8-4.8"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4.5v15M4.5 12h15"/></symbol>
+<symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20l.9-4.3L16 4.6a1.8 1.8 0 012.6 0l.8.8a1.8 1.8 0 010 2.6L8.3 19.1 4 20z"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M5 7h14M9 7V5.2A1.2 1.2 0 0110.2 4h3.6A1.2 1.2 0 0115 5.2V7m1.5 0l-.7 12a2 2 0 01-2 1.9H10.2a2 2 0 01-2-1.9L7.5 7"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M4 12.5l5 5.5L20 6"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2"/><path d="M7.5 10.5V7a4.5 4.5 0 019 0v3.5"/></symbol>
+<symbol id="i-arrow-r" viewBox="0 0 24 24"><path d="M4 12h16M13 5l7 7-7 7"/></symbol>
+<symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 0112 0c0 5 2 6.5 2 6.5H4S6 14 6 9z"/><path d="M10 19.5a2 2 0 004 0"/></symbol>
+<symbol id="i-logout" viewBox="0 0 24 24"><path d="M9 4.5H6a2 2 0 00-2 2v11a2 2 0 002 2h3"/><path d="M15.5 16.5L20 12l-4.5-4.5"/><path d="M20 12H9"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.2M12 19.3v2.2M4.2 4.2l1.6 1.6M18.2 18.2l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.2 19.8l1.6-1.6M18.2 5.8l1.6-1.6"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.2A8.2 8.2 0 119.8 4 6.4 6.4 0 0020 14.2z"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4.5 6.5L12 13l7.5-6.5"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18h10.5a3.5 3.5 0 00.3-7 5 5 0 00-9.6-1.5A4 4 0 007 18z"/></symbol>
+<symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="2.3"/><circle cx="6" cy="12" r="2.3"/><circle cx="18" cy="19" r="2.3"/><path d="M8.1 10.8l7.8-4.4M8.1 13.2l7.8 4.4"/></symbol>
+<symbol id="i-bank" viewBox="0 0 24 24"><path d="M3.5 9.5L12 4l8.5 5.5"/><path d="M5 9.5v9M9.2 9.5v9M14.8 9.5v9M19 9.5v9"/><path d="M3.5 18.5h17"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V19a1.5 1.5 0 01-1.5 1.5h-9A1.5 1.5 0 016 19V5A1.5 1.5 0 017 3.5z"/><path d="M14 3.5V8h4.5"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11.3 11.7L19 4"/><path d="M15.5 7.5l2.3 2.3M18.3 4.7l2.3 2.3"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.5V12l3 2"/></symbol>
+<symbol id="i-fingerprint" viewBox="0 0 24 24"><path d="M12 3.5c-4.5 0-8 3.3-8 8 0 3 0 4.7-1 6.8M12 3.5c4.5 0 8 3.3 8 8 0 1.6 0 2.9.2 4M8.5 20.5c1.2-1.8 1.5-3.6 1.5-6v-2a2 2 0 014 0v6M12 8.2a4.3 4.3 0 00-4.3 4.3v1.3a10 10 0 01-1 4.6M16.3 12.5a4.3 4.3 0 00-1-2.7"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.6"/></symbol>
+<symbol id="i-crypto" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9 8.5h4a2 2 0 010 4H9m0 0h4.5a2 2 0 010 4H9m0-8V6.5m0 10V18M12 6.5v1.7M12 15.8v1.7"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3.8l9 15.7H3l9-15.7z"/><path d="M12 10v3.6M12 16.7v.1"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3.5v12M7.5 11l4.5 4.5L16.5 11"/><path d="M4.5 18h15"/></symbol>
+</defs>
+</svg>
+
+<!-- =========================================================
+     LANDING PAGE
+     ========================================================= -->
+<div id="landing">
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand"><svg class="icon"><use href="#i-shield"/></svg> Digital Legacy Manager</div>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#who">Who it's for</a>
+        <button class="btn btn-ghost btn-sm" onclick="goAuth('login')">Log in</button>
+        <button class="btn btn-primary btn-sm" onclick="goAuth('signup')">Get started</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Problem-Based Learning Project · CSE-3C</div>
+        <h1>Your digital life, <em>accounted for</em> — no matter what happens.</h1>
+        <p class="hero-sub">Digital Legacy Manager is a secure vault for the accounts, files and subscriptions you'd otherwise leave scattered — with encrypted storage, trusted beneficiaries and instructions that only release on the conditions you set.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" onclick="goAuth('signup')">Enter the vault <svg class="icon"><use href="#i-arrow-r"/></svg></button>
+          <button class="btn btn-ghost" onclick="goAuth('login')">I already have an account</button>
+        </div>
+        <div class="hero-note">
+          <span><svg class="icon"><use href="#i-lock"/></svg> AES-style encrypted vault (demo)</span>
+          <span><svg class="icon"><use href="#i-fingerprint"/></svg> Role-based access control</span>
+          <span><svg class="icon"><use href="#i-activity"/></svg> Full audit logging</span>
+        </div>
+      </div>
+      <div class="vault-visual">
+        <div class="vault-badge"><svg class="icon" style="width:13px;height:13px"><use href="#i-check"/></svg> Legacy plan 80% ready</div>
+        <div class="vault-card">
+          <div class="vault-head">
+            <span class="tag">VAULT-ID · NDM-2026</span>
+            <div class="vault-lock"><svg class="icon"><use href="#i-lock"/></svg></div>
+          </div>
+          <div class="vault-row">
+            <div class="swatch" style="background:color-mix(in srgb, var(--cat-1) 20%, transparent); color:var(--cat-1)"><svg class="icon"><use href="#i-share"/></svg></div>
+            <div class="meta"><div class="t">Instagram &amp; LinkedIn</div><div class="s">Social media · Transfer to nominee</div></div>
+            <div class="arrow"><svg class="icon" style="width:12px;height:12px"><use href="#i-lock"/></svg></div>
+          </div>
+          <div class="vault-row">
+            <div class="swatch" style="background:color-mix(in srgb, var(--cat-4) 20%, transparent); color:var(--cat-4)"><svg class="icon"><use href="#i-bank"/></svg></div>
+            <div class="meta"><div class="t">HDFC Savings &amp; SIPs</div><div class="s">Financial · Notify executor</div></div>
+            <div class="arrow"><svg class="icon" style="width:12px;height:12px"><use href="#i-lock"/></svg></div>
+          </div>
+          <div class="vault-row">
+            <div class="swatch" style="background:color-mix(in srgb, var(--cat-3) 20%, transparent); color:var(--cat-3)"><svg class="icon"><use href="#i-cloud"/></svg></div>
+            <div class="meta"><div class="t">Google Drive backups</div><div class="s">Cloud storage · Transfer to family</div></div>
+            <div class="arrow"><svg class="icon" style="width:12px;height:12px"><use href="#i-lock"/></svg></div>
+          </div>
+          <div class="vault-foot">
+            <span>Release condition</span>
+            <b>90 days inactivity + executor verification</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="features">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Core capabilities</div>
+      <h2>Everything a digital estate plan needs, in one place.</h2>
+      <p>Built around the problems families run into most: scattered accounts, forgotten passwords, and no instructions left behind.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature"><div class="fi"><svg class="icon"><use href="#i-box"/></svg></div><h3>Centralized digital vault</h3><p>Catalog social media, email, cloud storage, financial accounts, documents and crypto wallets in one encrypted place instead of scattered across platforms.</p></div>
+      <div class="feature"><div class="fi"><svg class="icon"><use href="#i-users"/></svg></div><h3>Trusted beneficiaries</h3><p>Assign nominees per asset, set their trust level, and control exactly who is authorized to receive what — nobody sees more than you allow.</p></div>
+      <div class="feature"><div class="fi"><svg class="icon"><use href="#i-scroll"/></svg></div><h3>Digital will &amp; legacy messages</h3><p>Write instructions and schedule messages that stay locked until a condition you define — inactivity, verified death certificate, or manual release.</p></div>
+      <div class="feature"><div class="fi"><svg class="icon"><use href="#i-key"/></svg></div><h3>Strong authentication</h3><p>Encrypted credentials, two-factor authentication and secure recovery reduce the risk of unauthorized access to what matters most.</p></div>
+      <div class="feature"><div class="fi"><svg class="icon"><use href="#i-fingerprint"/></svg></div><h3>Role-based access control</h3><p>Beneficiaries, executors and admins each see only what their role permits — access is granted by design, not by accident.</p></div>
+      <div class="feature"><div class="fi"><svg class="icon"><use href="#i-activity"/></svg></div><h3>Full audit logging</h3><p>Every login, edit and release attempt is time-stamped and recorded, so activity on the vault is always traceable.</p></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="how" style="padding-top:0">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> How it works</div>
+      <h2>From scattered accounts to a plan that executes itself.</h2>
+    </div>
+    <div class="flow">
+      <div class="flow-step"><div class="num">01</div><h4>User organizes assets</h4><p>Add and categorize every digital asset in the encrypted vault.</p><div class="arrow"><svg class="icon"><use href="#i-arrow-r"/></svg></div></div>
+      <div class="flow-step"><div class="num">02</div><h4>Vault secures &amp; stores</h4><p>Assets are encrypted with access rules and release conditions attached.</p><div class="arrow"><svg class="icon"><use href="#i-arrow-r"/></svg></div></div>
+      <div class="flow-step"><div class="num">03</div><h4>Trigger condition is met</h4><p>Inactivity period elapses, or a verified event/manual release occurs.</p><div class="arrow"><svg class="icon"><use href="#i-arrow-r"/></svg></div></div>
+      <div class="flow-step"><div class="num">04</div><h4>Beneficiary gets access</h4><p>Only the assigned, authorized beneficiary receives the asset or message.</p></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="who" style="padding-top:0">
+    <div class="section-head">
+      <div class="eyebrow"><span class="dot"></span> Who it's for</div>
+      <h2>Built for anyone with something worth accounting for.</h2>
+    </div>
+    <div class="cases">
+      <div class="case"><b>Individuals</b><span>Planning ahead for their own accounts and files.</span></div>
+      <div class="case"><b>Families</b><span>Who need clarity on a loved one's digital footprint.</span></div>
+      <div class="case"><b>Legal professionals</b><span>Managing digital assets as part of estate planning.</span></div>
+      <div class="case"><b>Organizations</b><span>Handling posthumous access for shared accounts.</span></div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="final-cta">
+      <h2>Start building your digital legacy plan today.</h2>
+      <p>It takes minutes to add your first asset and assign a trusted beneficiary. Everything stays encrypted, and nothing is released until your conditions are met.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" onclick="goAuth('signup')" style="background:var(--accent-strong)">Create your vault <svg class="icon"><use href="#i-arrow-r"/></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-foot wrap">
+    <div class="foot-inner">
+      <span>© 2026 Digital Legacy Manager · Dept. of CSE, HITAM · PBL Prototype (UI demo, no live backend)</span>
+      <div class="foot-team">
+        <span>M. Nandhini</span><span>M. Sahasrika</span><span>M. Upagnya</span><span>Neha Deepak</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- =========================================================
+     AUTH SCREEN
+     ========================================================= -->
+<div id="authScreen" hidden>
+  <button class="btn btn-ghost btn-sm back" onclick="goLanding()">&larr; Back to overview</button>
+  <div class="auth-card">
+    <div class="auth-brand"><svg class="icon"><use href="#i-shield"/></svg> Digital Legacy Manager</div>
+    <div class="auth-tabs" id="authTabs">
+      <div class="auth-tab" id="tabLogin" onclick="setAuthTab('login')">Log in</div>
+      <div class="auth-tab" id="tabSignup" onclick="setAuthTab('signup')">Sign up</div>
+    </div>
+
+    <div id="authErrorBox" class="auth-error" hidden><svg class="icon"><use href="#i-alert"/></svg><span id="authErrorText"></span></div>
+
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+      <h2 style="font-size:1.1rem; margin-bottom:16px;">Welcome back</h2>
+      <div class="field"><label for="loginEmail">Email</label><input id="loginEmail" type="email" maxlength="100" placeholder="you@example.com" required></div>
+      <div class="field">
+        <div style="display:flex; justify-content:space-between; align-items:baseline;">
+          <label for="loginPass" style="margin-bottom:0;">Password</label>
+          <button type="button" class="btn-linklike" style="font-size:.78rem; background:none; border:none; padding:0; color:var(--accent-strong); font-weight:600; cursor:pointer;" onclick="startForgotPassword()">Forgot password?</button>
+        </div>
+        <input id="loginPass" type="password" placeholder="••••••••" required minlength="4" style="margin-top:6px;">
+      </div>
+      <button class="btn btn-primary auth-submit" type="submit">Log in <svg class="icon"><use href="#i-arrow-r"/></svg></button>
+      <div class="auth-demo"><svg class="icon"><use href="#i-key"/></svg><span>Prototype demo — any valid-looking email &amp; password (4+ chars) work, or <button type="button" onclick="fillDemo()">use the demo vault</button>.</span></div>
+    </form>
+
+    <form id="signupForm" onsubmit="return handleSignup(event)" hidden>
+      <h2 style="font-size:1.1rem; margin-bottom:16px;">Create your vault</h2>
+      <div class="field"><label for="suName">Full name</label><input id="suName" type="text" maxlength="60" placeholder="Your name" required></div>
+      <div class="field"><label for="suEmail">Email</label><input id="suEmail" type="email" maxlength="100" placeholder="you@example.com" required></div>
+      <div class="field"><label for="suPass">Password</label><input id="suPass" type="password" placeholder="Create a password" required minlength="4"></div>
+      <button class="btn btn-primary auth-submit" type="submit">Create vault <svg class="icon"><use href="#i-arrow-r"/></svg></button>
+    </form>
+
+    <!-- ---------- OTP EMAIL VERIFICATION STEP (login / signup) ---------- -->
+    <div id="otpStep" hidden>
+      <button type="button" class="btn btn-ghost btn-sm" style="margin-bottom:14px;" onclick="backToAuthForm()">&larr; Back</button>
+      <div style="display:flex; align-items:center; gap:.6em; margin-bottom:4px;">
+        <div style="width:34px; height:34px; border-radius:9px; background:var(--accent-soft); color:var(--accent-strong); display:flex; align-items:center; justify-content:center; flex:none;"><svg class="icon"><use href="#i-mail"/></svg></div>
+        <h2 style="font-size:1.1rem;">Verify your email</h2>
+      </div>
+      <p class="sub" style="margin-top:8px;">We've sent a 6-digit code to <strong id="otpEmailDisplay">you@example.com</strong>.</p>
+
+      <div class="otp-inputs" data-otp-scope="auth" style="margin:20px 0 6px;">
+        <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" oninput="otpBoxInput(this,'auth')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'auth')">
+        <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" oninput="otpBoxInput(this,'auth')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'auth')">
+        <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" oninput="otpBoxInput(this,'auth')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'auth')">
+        <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" oninput="otpBoxInput(this,'auth')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'auth')">
+        <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" oninput="otpBoxInput(this,'auth')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'auth')">
+        <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" oninput="otpBoxInput(this,'auth')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'auth')">
+      </div>
+      <div id="otp_err_auth" class="auth-error" hidden><svg class="icon"><use href="#i-alert"/></svg><span></span></div>
+
+      <button type="button" class="btn btn-primary auth-submit" onclick="otpAttemptVerify('auth')">Verify &amp; continue <svg class="icon"><use href="#i-arrow-r"/></svg></button>
+
+      <div class="auth-demo"><svg class="icon"><use href="#i-key"/></svg><span>Prototype demo — no real email is sent. Your code is <b class="mono" id="otp_demo_auth" style="letter-spacing:.08em;">000000</b>.</span></div>
+
+      <div class="auth-foot">Didn't get a code? <button type="button" id="otp_resend_auth" onclick="otpResend('auth')">Resend code</button><span id="otp_timer_auth" class="mono"></span></div>
+    </div>
+
+    <!-- ---------- FORGOT PASSWORD FLOW ---------- -->
+    <div id="forgotStep" hidden>
+      <button type="button" class="btn btn-ghost btn-sm" style="margin-bottom:14px;" onclick="cancelForgotPassword()">&larr; Back to log in</button>
+
+      <div id="fpEmailStep">
+        <h2 style="font-size:1.1rem;">Reset your password</h2>
+        <p class="sub" style="margin-top:6px;">Enter the email on your vault and we'll send a verification code.</p>
+        <div class="field" style="margin-top:16px;"><label for="fpEmail">Email</label><input id="fpEmail" type="email" maxlength="100" placeholder="you@example.com"></div>
+        <button type="button" class="btn btn-primary auth-submit" onclick="submitForgotEmail()">Send reset code <svg class="icon"><use href="#i-arrow-r"/></svg></button>
+      </div>
+
+      <div id="fpOtpStep" hidden>
+        <div style="display:flex; align-items:center; gap:.6em; margin-bottom:4px;">
+          <div style="width:34px; height:34px; border-radius:9px; background:var(--accent-soft); color:var(--accent-strong); display:flex; align-items:center; justify-content:center; flex:none;"><svg class="icon"><use href="#i-mail"/></svg></div>
+          <h2 style="font-size:1.1rem;">Verify it's you</h2>
+        </div>
+        <p class="sub" style="margin-top:8px;">Code sent to <strong id="fpEmailDisplay">you@example.com</strong>.</p>
+        <div class="otp-inputs" data-otp-scope="reset" style="margin:20px 0 6px;">
+          <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" oninput="otpBoxInput(this,'reset')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'reset')">
+          <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" oninput="otpBoxInput(this,'reset')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'reset')">
+          <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" oninput="otpBoxInput(this,'reset')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'reset')">
+          <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" oninput="otpBoxInput(this,'reset')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'reset')">
+          <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" oninput="otpBoxInput(this,'reset')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'reset')">
+          <input class="otp-box" maxlength="1" inputmode="numeric" pattern="[0-9]*" oninput="otpBoxInput(this,'reset')" onkeydown="otpBoxKeydown(event,this)" onpaste="otpBoxPaste(event,'reset')">
+        </div>
+        <div id="otp_err_reset" class="auth-error" hidden><svg class="icon"><use href="#i-alert"/></svg><span></span></div>
+        <button type="button" class="btn btn-primary auth-submit" onclick="otpAttemptVerify('reset')">Verify code</button>
+        <div class="auth-demo"><svg class="icon"><use href="#i-key"/></svg><span>Prototype demo — code: <b class="mono" id="otp_demo_reset" style="letter-spacing:.08em;">000000</b></span></div>
+        <div class="auth-foot">Didn't get a code? <button type="button" id="otp_resend_reset" onclick="otpResend('reset')">Resend code</button><span id="otp_timer_reset" class="mono"></span></div>
+      </div>
+
+      <div id="fpNewPassStep" hidden>
+        <h2 style="font-size:1.1rem;">Choose a new password</h2>
+        <p class="sub" style="margin-top:6px;">Email verified — set a new password for your vault.</p>
+        <div class="field" style="margin-top:16px;"><label for="fpNewPass">New password</label><input id="fpNewPass" type="password" minlength="4" placeholder="At least 4 characters"></div>
+        <div class="field"><label for="fpNewPass2">Confirm new password</label><input id="fpNewPass2" type="password" minlength="4" placeholder="Repeat password"></div>
+        <button type="button" class="btn btn-primary auth-submit" onclick="submitNewPassword()">Reset password <svg class="icon"><use href="#i-arrow-r"/></svg></button>
+      </div>
+    </div>
+
+    <div class="auth-foot" id="authFootNote">Prototype UI for a CSE Problem-Based Learning project — no real accounts are created.</div>
+  </div>
+</div>
+
+<!-- =========================================================
+     APP SHELL
+     ========================================================= -->
+<div id="app" hidden>
+  <aside class="sidebar">
+    <div class="sidebar-brand"><svg class="icon"><use href="#i-shield"/></svg> Legacy Manager</div>
+    <nav>
+      <div class="side-link" data-view="dashboard" onclick="setView('dashboard')"><svg class="icon"><use href="#i-grid"/></svg> Dashboard</div>
+      <div class="side-link" data-view="vault" onclick="setView('vault')"><svg class="icon"><use href="#i-box"/></svg> Digital Vault</div>
+      <div class="side-link" data-view="beneficiaries" onclick="setView('beneficiaries')"><svg class="icon"><use href="#i-users"/></svg> Beneficiaries</div>
+      <div class="side-link" data-view="will" onclick="setView('will')"><svg class="icon"><use href="#i-scroll"/></svg> Digital Will</div>
+      <div class="side-link" data-view="audit" onclick="setView('audit')"><svg class="icon"><use href="#i-activity"/></svg> Audit Log</div>
+      <div class="side-link" data-view="security" onclick="setView('security')"><svg class="icon"><use href="#i-gear"/></svg> Security</div>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="sidebar-card">
+      <div class="rl-head"><span>Legacy readiness</span><span id="sbReadinessPct" class="mono">0%</span></div>
+      <div class="rl-bar"><i id="sbReadinessBar" style="width:0%"></i></div>
+    </div>
+    <div class="sidebar-user">
+      <div class="avatar" id="sbAvatar">—</div>
+      <div class="meta"><div class="n" id="sbName">—</div><div class="e" id="sbEmail">—</div></div>
+      <button title="Log out" onclick="logout()"><svg class="icon"><use href="#i-logout"/></svg></button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <nav class="mobile-tabbar">
+      <div class="mobile-tab" data-mtab="dashboard" onclick="setView('dashboard')"><svg class="icon"><use href="#i-grid"/></svg>Home</div>
+      <div class="mobile-tab" data-mtab="vault" onclick="setView('vault')"><svg class="icon"><use href="#i-box"/></svg>Vault</div>
+      <div class="mobile-tab" data-mtab="beneficiaries" onclick="setView('beneficiaries')"><svg class="icon"><use href="#i-users"/></svg>People</div>
+      <div class="mobile-tab" data-mtab="will" onclick="setView('will')"><svg class="icon"><use href="#i-scroll"/></svg>Will</div>
+      <div class="mobile-tab" data-mtab="audit" onclick="setView('audit')"><svg class="icon"><use href="#i-activity"/></svg>Log</div>
+      <div class="mobile-tab" data-mtab="security" onclick="setView('security')"><svg class="icon"><use href="#i-gear"/></svg>Security</div>
+    </nav>
+    <div class="topbar">
+      <div>
+        <h1 id="topbarTitle">Dashboard</h1>
+        <div class="sub" id="topbarSub">Your digital estate at a glance</div>
+      </div>
+      <div class="topbar-actions">
+        <div class="search-box"><svg class="icon"><use href="#i-search"/></svg><input placeholder="Search assets, beneficiaries…" id="globalSearch" oninput="onGlobalSearch()"></div>
+        <div class="theme-toggle">
+          <button id="themeBtnLight" onclick="setTheme('light')" title="Light"><svg class="icon"><use href="#i-sun"/></svg></button>
+          <button id="themeBtnDark" onclick="setTheme('dark')" title="Dark"><svg class="icon"><use href="#i-moon"/></svg></button>
+        </div>
+        <button class="btn-icon" title="Notifications"><svg class="icon"><use href="#i-bell"/></svg></button>
+      </div>
+    </div>
+
+    <!-- ---------- DASHBOARD ---------- -->
+    <div class="view" id="view-dashboard">
+      <div class="tiles">
+        <div class="tile"><div class="tl"><span>Digital assets</span><svg class="icon"><use href="#i-box"/></svg></div><div class="tv" id="statAssets">0</div><div class="td" id="statAssetsSub">across 0 categories</div></div>
+        <div class="tile"><div class="tl"><span>Beneficiaries</span><svg class="icon"><use href="#i-users"/></svg></div><div class="tv" id="statBenef">0</div><div class="td" id="statBenefSub">trusted nominees</div></div>
+        <div class="tile"><div class="tl"><span>Legacy readiness</span><svg class="icon"><use href="#i-shield"/></svg></div><div class="tv" id="statReadiness">0%</div><div class="td up" id="statReadinessSub">of your plan complete</div></div>
+        <div class="tile"><div class="tl"><span>Last security event</span><svg class="icon"><use href="#i-activity"/></svg></div><div class="tv" id="statLastEvent" style="font-size:1.05rem">—</div><div class="td" id="statLastEventSub">—</div></div>
+      </div>
+
+      <div class="dash-grid">
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="card">
+            <div class="card-head"><div><h3>Assets by category</h3><div class="sub">Where your digital footprint lives right now</div></div></div>
+            <div class="donut-wrap">
+              <div id="donutChart"></div>
+              <div class="legend" id="donutLegend"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-head"><div><h3>Recent activity</h3><div class="sub">Latest events from your audit log</div></div><button class="link-btn" onclick="setView('audit')">View all</button></div>
+            <div class="feed" id="dashFeed"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div><h3>Legacy readiness checklist</h3><div class="sub">Five steps to a complete plan</div></div></div>
+          <div class="checklist" id="readinessChecklist"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- VAULT ---------- -->
+    <div class="view" id="view-vault" hidden>
+      <div class="view-head">
+        <div><h1>Digital Vault</h1><p>Every account, subscription and file you've catalogued, encrypted at rest.</p></div>
+        <button class="btn btn-primary" onclick="openAssetModal()"><svg class="icon"><use href="#i-plus"/></svg> Add asset</button>
+      </div>
+      <div class="toolbar">
+        <div class="filter-chips" id="vaultFilterChips"></div>
+      </div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Asset</th><th>Category</th><th>Beneficiary</th><th>On trigger</th><th>Status</th><th></th></tr></thead>
+            <tbody id="vaultTableBody"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="vaultEmpty" hidden><svg class="icon"><use href="#i-box"/></svg><h3>No assets yet</h3><p>Add your first digital asset to start building your vault.</p></div>
+      </div>
+    </div>
+
+    <!-- ---------- BENEFICIARIES ---------- -->
+    <div class="view" id="view-beneficiaries" hidden>
+      <div class="view-head">
+        <div><h1>Beneficiaries</h1><p>People you trust to receive access, instructions or assets.</p></div>
+        <button class="btn btn-primary" onclick="openBeneficiaryModal()"><svg class="icon"><use href="#i-plus"/></svg> Add beneficiary</button>
+      </div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Name</th><th>Relationship</th><th>Contact</th><th>Trust level</th><th>Assigned assets</th><th>Verification</th><th></th></tr></thead>
+            <tbody id="benefTableBody"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="benefEmpty" hidden><svg class="icon"><use href="#i-users"/></svg><h3>No beneficiaries yet</h3><p>Add someone you trust to receive your digital legacy.</p></div>
+      </div>
+    </div>
+
+    <!-- ---------- WILL & MESSAGES ---------- -->
+    <div class="view" id="view-will" hidden>
+      <div class="view-head">
+        <div><h1>Digital Will &amp; Legacy Messages</h1><p>Instructions and messages that stay locked until your release conditions are met.</p></div>
+      </div>
+
+      <div class="card-head" style="margin-top:4px;"><h3>Instructions</h3><button class="btn btn-primary btn-sm" onclick="openInstructionModal()"><svg class="icon"><use href="#i-plus"/></svg> New instruction</button></div>
+      <div class="table-card" style="margin-bottom:22px;">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Instruction</th><th>Trigger condition</th><th>Beneficiary</th><th>Status</th><th>Verification</th><th></th></tr></thead>
+            <tbody id="instrTableBody"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="instrEmpty" hidden><svg class="icon"><use href="#i-scroll"/></svg><h3>No instructions yet</h3><p>Define what should happen to your assets and who decides it.</p></div>
+      </div>
+
+      <div class="card-head"><h3>Legacy messages</h3><button class="btn btn-primary btn-sm" onclick="openMessageModal()"><svg class="icon"><use href="#i-plus"/></svg> Schedule message</button></div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Subject</th><th>To</th><th>Release condition</th><th>Status</th><th></th></tr></thead>
+            <tbody id="msgTableBody"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="msgEmpty" hidden><svg class="icon"><use href="#i-mail"/></svg><h3>No messages scheduled</h3><p>Write something to be delivered when it matters.</p></div>
+      </div>
+    </div>
+
+    <!-- ---------- AUDIT LOG ---------- -->
+    <div class="view" id="view-audit" hidden>
+      <div class="view-head">
+        <div><h1>Audit Log</h1><p>Every login, edit and access attempt on your vault, time-stamped.</p></div>
+        <button class="btn btn-ghost btn-sm" onclick="exportAuditLog()"><svg class="icon"><use href="#i-download"/></svg> Export CSV</button>
+      </div>
+      <div class="toolbar"><div class="filter-chips" id="auditFilterChips"></div></div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Timestamp</th><th>Actor</th><th>Action</th><th>Detail</th><th>Status</th></tr></thead>
+            <tbody id="auditTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- SECURITY ---------- -->
+    <div class="view" id="view-security" hidden>
+      <div class="view-head"><div><h1>Security</h1><p>Authentication, access control and session management for your vault.</p></div></div>
+
+      <div class="security-grid">
+        <div class="card">
+          <div class="card-head"><h3>Authentication</h3></div>
+          <div class="sec-row"><div><div class="st">Two-factor authentication</div><div class="sd">Require a one-time code in addition to your password.</div></div><button class="switch on" id="switch2fa" onclick="on2faToggleClick()"></button></div>
+          <div class="sec-row"><div><div class="st">Login alerts</div><div class="sd">Email you whenever a new device signs in.</div></div><button class="switch on" id="switchAlerts" onclick="toggleSwitch('switchAlerts','Login alerts')"></button></div>
+          <div class="sec-row"><div><div class="st">Biometric unlock</div><div class="sd">Use fingerprint or face unlock on trusted devices.</div></div><button class="switch" id="switchBio" onclick="toggleSwitch('switchBio','Biometric unlock')"></button></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Inactivity trigger</h3></div>
+          <p style="font-size:.85rem; color:var(--ink-soft); line-height:1.6;">If your vault sees no login activity for this many days, beneficiary release begins (subject to verification).</p>
+          <div class="slider-row" style="margin-top:16px;">
+            <input type="range" min="30" max="365" step="15" value="90" id="inactivitySlider" oninput="onInactivityChange(this.value)">
+            <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:.8rem; color:var(--muted);"><span>30 days</span><span class="mono" id="inactivityVal" style="color:var(--accent-strong); font-weight:700;">90 days</span><span>365 days</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Role-based access control</h3></div>
+          <table class="role-table">
+            <tr><td style="width:34%"><span class="badge badge-muted">Owner</span></td><td>Full read/write access to all assets, beneficiaries and instructions.</td></tr>
+            <tr><td><span class="badge badge-muted">Executor</span></td><td>Can verify trigger conditions and initiate release, cannot edit assets.</td></tr>
+            <tr><td><span class="badge badge-muted">Beneficiary</span></td><td>Sees only the assets and messages explicitly assigned to them, after release.</td></tr>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Active sessions</h3></div>
+          <div id="sessionList"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Password</h3></div>
+          <p style="font-size:.78rem; color:var(--muted); margin-bottom:14px;" id="pwLastChanged">Not changed this session.</p>
+          <div class="field"><label for="cpCurrent">Current password</label><input type="password" id="cpCurrent" placeholder="••••••••"></div>
+          <div class="field-row">
+            <div class="field"><label for="cpNew">New password</label><input type="password" id="cpNew" placeholder="At least 4 characters"></div>
+            <div class="field"><label for="cpConfirm">Confirm new password</label><input type="password" id="cpConfirm" placeholder="Repeat password"></div>
+          </div>
+          <button class="btn btn-primary btn-sm" onclick="changePassword()">Change password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     MODALS (templates, shown via JS)
+     ========================================================= -->
+<div id="modalHost"></div>
+<div id="toastHost"></div>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

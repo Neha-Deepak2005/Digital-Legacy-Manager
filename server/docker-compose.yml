@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: dlm_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: dlm_user
+      POSTGRES_PASSWORD: dlm_dev_password
+      POSTGRES_DB: dlm_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - dlm_pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dlm_user -d dlm_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dlm_pg_data:
