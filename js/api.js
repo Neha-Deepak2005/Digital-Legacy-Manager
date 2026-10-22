@@ -5,7 +5,7 @@
    localStorage for app data (only the JWT itself is kept there, which is
    the normal place a browser app keeps its login token).
    ========================================================================= */
-const API_BASE = (window.DLM_API_BASE || 'http://localhost:4000/api');
+const API_BASE = 'https://digital-legacy-manager.onrender.com/api';
 const TOKEN_KEY = 'dlm_token_v1';
 
 function getToken(){ try{ return localStorage.getItem(TOKEN_KEY); }catch(e){ return null; } }
